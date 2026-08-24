@@ -3,58 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>주식 물타기 계산기</title>
+  <title>주식 물타기 계산기 - multagicalc.com</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f8fafc; display: flex; justify-content: center; padding: 40px 20px; }
-    .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); width: 100%; max-width: 480px; }
-    h1 { font-size: 20px; font-weight: bold; margin-bottom: 20px; color: #1e293b; text-align: center; }
-    .input-group { margin-bottom: 15px; }
-    label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #475569; }
-    input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; box-sizing: border-box; }
-    button { width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif; background-color: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+    .card { background: #ffffff; padding: 32px 28px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px; }
+    .header { text-align: center; margin-bottom: 24px; }
+    h1 { font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px 0; }
+    .subtitle { font-size: 13px; color: #64748b; margin: 0; }
+    .input-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #334155; }
+    input { width: 100%; padding: 12px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 15px; box-sizing: border-box; outline: none; transition: border-color 0.2s; }
+    input:focus { border-color: #2563eb; }
+    .input-row { display: flex; gap: 10px; }
+    .input-row .input-group { flex: 1; }
+    button { width: 100%; padding: 14px; background-color: #2563eb; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background-color 0.2s; }
     button:hover { background-color: #1d4ed8; }
-    .result { margin-top: 25px; padding: 15px; background-color: #f1f5f9; border-radius: 8px; display: none; }
-    .result-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: #334155; }
-    .result-item.highlight { font-weight: bold; font-size: 16px; color: #0f172a; border-top: 1px solid #cbd5e1; padding-top: 8px; margin-top: 8px; }
+    .result { margin-top: 24px; padding: 20px; background-color: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; display: none; }
+    .result-stock-title { font-size: 17px; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px dashed #cbd5e1; }
+    .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: #475569; }
+    .result-item.highlight { font-weight: 800; font-size: 17px; color: #2563eb; border-top: 1.5px solid #cbd5e1; padding-top: 12px; margin-top: 12px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>📊 주식 물타기 계산기</h1>
-    <div class="input-group">
-      <label>보유 평균단가 (원)</label>
-      <input type="number" id="currentPrice" placeholder="예: 50000">
+    <div class="header">
+      <h1>📊 주식 물타기 계산기</h1>
+      <p class="subtitle">보유 평단과 추가 매수를 반영한 최종 단가 산출</p>
     </div>
+
+    <!-- 종목명 입력 필드 -->
     <div class="input-group">
-      <label>보유 수량 (주)</label>
-      <input type="number" id="currentQty" placeholder="예: 100">
+      <label for="stockName">종목명 (선택)</label>
+      <input type="text" id="stockName" placeholder="예: 삼성전자, 에코프로">
     </div>
-    <div class="input-group">
-      <label>추가 매수단가 (원)</label>
-      <input type="number" id="buyPrice" placeholder="예: 40000">
+
+    <!-- 1차 보유 정보 -->
+    <div class="input-row">
+      <div class="input-group">
+        <label for="currentPrice">보유 평단가 (원)</label>
+        <input type="number" id="currentPrice" placeholder="50000">
+      </div>
+      <div class="input-group">
+        <label for="currentQty">보유 수량 (주)</label>
+        <input type="number" id="currentQty" placeholder="100">
+      </div>
     </div>
-    <div class="input-group">
-      <label>추가 매수수량 (주)</label>
-      <input type="number" id="buyQty" placeholder="예: 50">
+
+    <!-- 2차 추가매수 정보 -->
+    <div class="input-row">
+      <div class="input-group">
+        <label for="buyPrice">추가 매수가 (원)</label>
+        <input type="number" id="buyPrice" placeholder="40000">
+      </div>
+      <div class="input-group">
+        <label for="buyQty">추가 수량 (주)</label>
+        <input type="number" id="buyQty" placeholder="50">
+      </div>
     </div>
+
     <button onclick="calc()">평균단가 계산하기</button>
 
+    <!-- 결과 영역 -->
     <div class="result" id="resultBox">
-      <div class="result-item"><span>총 보유 수량:</span><span id="totalQty">0주</span></div>
-      <div class="result-item"><span>총 투자 금액:</span><span id="totalCost">0원</span></div>
-      <div class="result-item highlight"><span>최종 평균단가:</span><span id="avgPrice">0원</span></div>
+      <div class="result-stock-title" id="resStockName">종목명</div>
+      <div class="result-item"><span>총 보유 수량</span><span id="totalQty">0주</span></div>
+      <div class="result-item"><span>총 매수 금액</span><span id="totalCost">0원</span></div>
+      <div class="result-item highlight"><span>최종 평균단가</span><span id="avgPrice">0원</span></div>
     </div>
   </div>
 
   <script>
     function calc() {
+      const stockName = document.getElementById('stockName').value.trim() || '보유 종목';
       const p1 = Number(document.getElementById('currentPrice').value);
       const q1 = Number(document.getElementById('currentQty').value);
       const p2 = Number(document.getElementById('buyPrice').value);
       const q2 = Number(document.getElementById('buyQty').value);
 
       if (!p1 || !q1 || !p2 || !q2) {
-        alert('모든 항목을 입력해 주세요.');
+        alert('단가와 수량을 모두 입력해 주세요.');
         return;
       }
 
@@ -62,9 +89,10 @@
       const totalCost = (p1 * q1) + (p2 * q2);
       const avg = Math.round(totalCost / totalQty);
 
-      document.getElementById('totalQty').innerText = totalQty.toLocaleString() + '주';
-      document.getElementById('totalCost').innerText = totalCost.toLocaleString() + '원';
-      document.getElementById('avgPrice').innerText = avg.toLocaleString() + '원';
+      document.getElementById('resStockName').innerText = '📈 ' + stockName + ' 계산 결과';
+      document.getElementById('totalQty').innerText = totalQty.toLocaleString() + ' 주';
+      document.getElementById('totalCost').innerText = totalCost.toLocaleString() + ' 원';
+      document.getElementById('avgPrice').innerText = avg.toLocaleString() + ' 원';
       document.getElementById('resultBox').style.display = 'block';
     }
   </script>
