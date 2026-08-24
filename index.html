@@ -98,34 +98,33 @@
   <div class="row">
     <div class="form-group">
       <label for="currentPrice">현재가 (원)</label>
-      <input type="number" id="currentPrice" placeholder="예: 32250">
+      <input type="text" inputmode="numeric" id="currentPrice" placeholder="예: 32250">
     </div>
     <div class="form-group">
       <label for="strength">체결강도 (%) <span class="guide-tip">우측 상단 %</span></label>
-      <input type="number" step="any" id="strength" placeholder="예: 130.05">
+      <input type="text" inputmode="decimal" id="strength" placeholder="예: 130.05 또는 130">
     </div>
   </div>
 
   <div class="row">
     <div class="form-group">
       <label for="totalSellQty" style="color: var(--sell-color);">총 매도 잔량 <span class="guide-tip">호가창 맨밑 좌측</span></label>
-      <input type="number" id="totalSellQty" placeholder="예: 75215">
+      <input type="text" inputmode="numeric" id="totalSellQty" placeholder="예: 75215">
     </div>
     <div class="form-group">
       <label for="totalBuyQty" style="color: var(--buy-color);">총 매수 잔량 <span class="guide-tip">호가창 맨밑 우측</span></label>
-      <input type="number" id="totalBuyQty" placeholder="예: 12102">
+      <input type="text" inputmode="numeric" id="totalBuyQty" placeholder="예: 12102">
     </div>
   </div>
 
-  <!-- 요청하신 직관적 명칭 적용 -->
   <div class="row">
     <div class="form-group">
       <label for="resistPrice">매도잔량 최대 가격 <span class="guide-tip">(선택)</span></label>
-      <input type="number" id="resistPrice" placeholder="파란색 잔량 최대 호가 (예: 32750)">
+      <input type="text" inputmode="numeric" id="resistPrice" placeholder="파란색 잔량 최대 호가 (예: 32750)">
     </div>
     <div class="form-group">
       <label for="supportPrice">매수잔량 최대 가격 <span class="guide-tip">(선택)</span></label>
-      <input type="number" id="supportPrice" placeholder="붉은색 잔량 최대 호가 (예: 32000)">
+      <input type="text" inputmode="numeric" id="supportPrice" placeholder="붉은색 잔량 최대 호가 (예: 32000)">
     </div>
   </div>
 
@@ -142,14 +141,19 @@
 </div>
 
 <script>
+  function cleanNum(val) {
+    if (!val) return 0;
+    return parseFloat(val.toString().replace(/,/g, '').trim()) || 0;
+  }
+
   function analyze() {
     const stockName = document.getElementById('stockName').value.trim() || '보유 종목';
-    const currentPrice = Number(document.getElementById('currentPrice').value);
-    const strength = parseFloat(document.getElementById('strength').value);
-    const totalSell = Number(document.getElementById('totalSellQty').value);
-    const totalBuy = Number(document.getElementById('totalBuyQty').value);
-    const resistPrice = Number(document.getElementById('resistPrice').value);
-    const supportPrice = Number(document.getElementById('supportPrice').value);
+    const currentPrice = cleanNum(document.getElementById('currentPrice').value);
+    const strength = cleanNum(document.getElementById('strength').value);
+    const totalSell = cleanNum(document.getElementById('totalSellQty').value);
+    const totalBuy = cleanNum(document.getElementById('totalBuyQty').value);
+    const resistPrice = cleanNum(document.getElementById('resistPrice').value);
+    const supportPrice = cleanNum(document.getElementById('supportPrice').value);
 
     if (!currentPrice || !strength || !totalSell || !totalBuy) {
       alert('현재가, 체결강도, 총 잔량을 모두 입력해 주세요.');
