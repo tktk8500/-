@@ -37,7 +37,7 @@
     .header { text-align: center; margin-bottom: 20px; }
     h1 { font-size: 20px; font-weight: 800; margin: 0 0 6px 0; }
     .subtitle { font-size: 12.5px; color: #64748b; margin: 0; }
-    .form-group { margin-bottom: 14px; position: relative; }
+    .form-group { margin-bottom: 14px; }
     label { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; color: #334155; }
     .guide-tip { font-size: 11px; color: #64748b; font-weight: normal; }
     input {
@@ -98,34 +98,34 @@
   <div class="row">
     <div class="form-group">
       <label for="currentPrice">현재가 (원)</label>
-      <input type="number" id="currentPrice" placeholder="예: 32150">
+      <input type="number" id="currentPrice" placeholder="예: 32250">
     </div>
     <div class="form-group">
       <label for="strength">체결강도 (%) <span class="guide-tip">우측 상단 %</span></label>
-      <input type="number" step="any" id="strength" placeholder="예: 129.77">
+      <input type="number" step="any" id="strength" placeholder="예: 130.05">
     </div>
   </div>
 
   <div class="row">
     <div class="form-group">
       <label for="totalSellQty" style="color: var(--sell-color);">총 매도 잔량 <span class="guide-tip">호가창 맨밑 좌측</span></label>
-      <input type="number" id="totalSellQty" placeholder="예: 38338">
+      <input type="number" id="totalSellQty" placeholder="예: 75215">
     </div>
     <div class="form-group">
       <label for="totalBuyQty" style="color: var(--buy-color);">총 매수 잔량 <span class="guide-tip">호가창 맨밑 우측</span></label>
-      <input type="number" id="totalBuyQty" placeholder="예: 14792">
+      <input type="number" id="totalBuyQty" placeholder="예: 12102">
     </div>
   </div>
 
-  <!-- 초보자도 쉽게 알 수 있도록 명칭 변경 -->
+  <!-- 요청하신 직관적 명칭 적용 -->
   <div class="row">
     <div class="form-group">
-      <label for="resistPrice">위쪽 최대 물량 가격 <span class="guide-tip">(매도벽/선택)</span></label>
-      <input type="number" id="resistPrice" placeholder="파란색 막대 가장 긴 가격 (예: 32400)">
+      <label for="resistPrice">매도잔량 최대 가격 <span class="guide-tip">(선택)</span></label>
+      <input type="number" id="resistPrice" placeholder="파란색 잔량 최대 호가 (예: 32750)">
     </div>
     <div class="form-group">
-      <label for="supportPrice">아래쪽 최대 받침 가격 <span class="guide-tip">(매수벽/선택)</span></label>
-      <input type="number" id="supportPrice" placeholder="붉은색 막대 가장 긴 가격 (예: 32050)">
+      <label for="supportPrice">매수잔량 최대 가격 <span class="guide-tip">(선택)</span></label>
+      <input type="number" id="supportPrice" placeholder="붉은색 잔량 최대 호가 (예: 32000)">
     </div>
   </div>
 
@@ -135,8 +135,8 @@
     <div class="result-title" id="resTitle">진단 결과</div>
     <div class="result-status" id="resStatus">수급 상태</div>
     <div class="info-row"><span>매도 / 매수 잔량 비율</span><span class="val" id="resRatio">0%</span></div>
-    <div class="info-row"><span>단기 저항 가격 (매도벽)</span><span class="val" id="resResist">-</span></div>
-    <div class="info-row"><span>단기 방어 가격 (매수벽)</span><span class="val" id="resSupport">-</span></div>
+    <div class="info-row"><span>단기 돌파 가격 (매도벽)</span><span class="val" id="resResist">-</span></div>
+    <div class="info-row"><span>단기 지지 가격 (매수벽)</span><span class="val" id="resSupport">-</span></div>
     <div class="comment-box" id="resComment"></div>
   </div>
 </div>
