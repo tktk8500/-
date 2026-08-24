@@ -1,195 +1,330 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>실시간 호가창 세력 & 수급 분석기 - multagicalc.com</title>
-  <style>
-    :root {
-      --primary: #2563eb;
-      --sell-color: #2563eb;
-      --buy-color: #dc2626;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --border: #cbd5e1;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px 16px;
-      box-sizing: border-box;
-    }
-    .container {
-      background: var(--card-bg);
-      padding: 30px 22px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 480px;
-    }
-    .header { text-align: center; margin-bottom: 20px; }
-    h1 { font-size: 20px; font-weight: 800; margin: 0 0 6px 0; }
-    .subtitle { font-size: 12.5px; color: #64748b; margin: 0; }
-    .form-group { margin-bottom: 14px; }
-    label { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; color: #334155; }
-    .guide-tip { font-size: 11px; color: #64748b; font-weight: normal; }
-    input {
-      width: 100%;
-      padding: 11px 12px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 14px;
-      box-sizing: border-box;
-      outline: none;
-    }
-    input:focus { border-color: var(--primary); }
-    .row { display: flex; gap: 10px; }
-    .row .form-group { flex: 1; }
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background-color: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 6px;
-    }
-    .btn-submit:hover { background-color: #1d4ed8; }
-    .result-box {
-      margin-top: 20px;
-      padding: 18px;
-      background-color: #f1f5f9;
-      border-radius: 12px;
-      display: none;
-    }
-    .result-title { font-size: 15px; font-weight: 800; text-align: center; margin-bottom: 12px; }
-    .result-status { font-size: 16px; font-weight: 800; text-align: center; padding: 10px; border-radius: 8px; margin-bottom: 12px; }
-    .status-bull { background-color: #fee2e2; color: #dc2626; }
-    .status-bear { background-color: #dbeafe; color: #2563eb; }
-    .status-neutral { background-color: #e2e8f0; color: #475569; }
-    .info-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; color: #475569; }
-    .info-row span.val { font-weight: 700; color: #0f172a; }
-    .comment-box { background: #ffffff; padding: 12px; border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: #334155; margin-top: 10px; border-left: 3px solid var(--primary); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주식 호가창 분석기 & 실전 수급 진단 가이드 | multagicalc</title>
+    <meta name="description" content="주식 10호가 잔량 분석, 매도/매수 비율 판별, 체결강도 기반 세력 매집 및 허매수 진단 계산기">
+    <link rel="canonical" href="https://multagicalc.com/" />
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --accent-red: #f85149;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-yellow: #d29922;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            color: var(--text-bright);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #8b949e;
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #8b949e;
+        }
+
+        .input-group input {
+            background-color: #090d13;
+            border: 1px solid var(--border-color);
+            color: var(--text-bright);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .calc-btn {
+            width: 100%;
+            background-color: #238636;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .calc-btn:hover {
+            background-color: #2ea043;
+        }
+
+        .result-box {
+            margin-top: 24px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #090d13;
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .badge-bull { background-color: rgba(248, 81, 73, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
+        .badge-bear { background-color: rgba(88, 166, 255, 0.2); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+        .badge-trap { background-color: rgba(210, 153, 34, 0.2); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
+
+        .result-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background-color: var(--card-bg);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-card .title { font-size: 0.8rem; color: #8b949e; }
+        .metric-card .value { font-size: 1.2rem; font-weight: bold; color: var(--text-bright); margin-top: 4px; }
+
+        .analysis-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .guide-section {
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .guide-section h2 {
+            color: var(--text-bright);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 32px;
+            font-size: 1.3rem;
+        }
+
+        .guide-section h3 {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .guide-section ul {
+            padding-left: 20px;
+        }
+
+        .guide-section li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.8rem;
+            margin-top: 40px;
+            padding-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header">
-    <h1>🔍 호가창 세력 & 매도벽 분석기</h1>
-    <p class="subtitle">HTS 호가창 데이터를 기반으로 한 세력 수급 진단</p>
-  </div>
+    <header>
+        <h1>⚡ 주식 호가창 수급 진단 계산기</h1>
+        <p>10호가 총잔량 비율과 체결강도로 세력의 매집과 허매수 함정을 판별합니다.</p>
+    </header>
 
-  <div class="form-group">
-    <label for="stockName">종목명</label>
-    <input type="text" id="stockName" placeholder="예: 한국전력, 삼성전자">
-  </div>
+    <div class="card">
+        <div class="input-grid">
+            <div class="input-group">
+                <label for="sellQty">매도 총잔량 (주)</label>
+                <input type="number" id="sellQty" placeholder="예: 250000" />
+            </div>
+            <div class="input-group">
+                <label for="buyQty">매수 총잔량 (주)</label>
+                <input type="number" id="buyQty" placeholder="예: 110000" />
+            </div>
+            <div class="input-group">
+                <label for="strength">체결강도 (%)</label>
+                <input type="number" id="strength" step="0.1" placeholder="예: 132.8" />
+            </div>
+            <div class="input-group">
+                <label for="currentPrice">현재가 (선택/원)</label>
+                <input type="number" id="currentPrice" placeholder="예: 42350" />
+            </div>
+        </div>
 
-  <div class="row">
-    <div class="form-group">
-      <label for="currentPrice">현재가 (원)</label>
-      <input type="text" inputmode="numeric" id="currentPrice" placeholder="예: 32250">
-    </div>
-    <div class="form-group">
-      <label for="strength">체결강도 (%) <span class="guide-tip">우측 상단 %</span></label>
-      <input type="text" inputmode="decimal" id="strength" placeholder="예: 130.05 또는 130">
-    </div>
-  </div>
+        <button class="calc-btn" onclick="analyzeHoga()">호가창 수급 진단하기</button>
 
-  <div class="row">
-    <div class="form-group">
-      <label for="totalSellQty" style="color: var(--sell-color);">총 매도 잔량 <span class="guide-tip">호가창 맨밑 좌측</span></label>
-      <input type="text" inputmode="numeric" id="totalSellQty" placeholder="예: 75215">
+        <div id="resultBox" class="result-box">
+            <div id="statusBadge" class="status-badge"></div>
+            <div class="result-metrics">
+                <div class="metric-card">
+                    <div class="title">매도잔량 / 매수잔량 비율</div>
+                    <div id="ratioVal" class="value">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="title">체결강도 상태</div>
+                    <div id="strengthVal" class="value">0%</div>
+                </div>
+            </div>
+            <div id="diagnosisText" class="analysis-text"></div>
+        </div>
     </div>
-    <div class="form-group">
-      <label for="totalBuyQty" style="color: var(--buy-color);">총 매수 잔량 <span class="guide-tip">호가창 맨밑 우측</span></label>
-      <input type="text" inputmode="numeric" id="totalBuyQty" placeholder="예: 12102">
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="form-group">
-      <label for="resistPrice">매도잔량 최대 가격 <span class="guide-tip">(선택)</span></label>
-      <input type="text" inputmode="numeric" id="resistPrice" placeholder="파란색 잔량 최대 호가 (예: 32750)">
-    </div>
-    <div class="form-group">
-      <label for="supportPrice">매수잔량 최대 가격 <span class="guide-tip">(선택)</span></label>
-      <input type="text" inputmode="numeric" id="supportPrice" placeholder="붉은색 잔량 최대 호가 (예: 32000)">
-    </div>
-  </div>
+    <!-- 구글 애드센스 심사용 고품질 가이드 콘텐츠 -->
+    <div class="card guide-section">
+        <h2>📊 호가창 잔량의 법칙과 실전 매매 해석 가이드</h2>
+        
+        <h3>1. 호가창 잔량의 역설 (왜 매도잔량이 많아야 오르는가?)</h3>
+        <p>
+            초보 투자자들은 매수잔량이 매도잔량보다 많을 때 주가가 상승할 것이라 착각하기 쉽습니다. 그러나 실전 트레이딩에서는 정반대의 현상이 일어납니다.
+        </p>
+        <ul>
+            <li><strong>매도잔량 > 매수잔량 (상승 신호):</strong> 세력이 위쪽 매도벽에 걸린 물량을 적극적인 시장가 매수로 집어삼킬 때 주가가 급등합니다. 팔려는 물량이 위에 두텁게 쌓여 있어야 세력이 물량을 사 모으면서 가격을 위로 견인할 수 있습니다.</li>
+            <li><strong>매수잔량 > 매도잔량 (하락/물량넘기기 경고):</strong> 아래쪽 매수 호가에 물량이 수십만 주 쌓여 있는 것은 세력이 자신의 물량을 개미들에게 떠넘기기 위해 바쳐두는 <em>'허매수 받침'</em>일 가능성이 높습니다. 아래 호가가 탄탄해 보이지만 세력이 위에서 시장가로 매도 폭탄을 던지면 순식간에 무너집니다.</li>
+        </ul>
 
-  <button class="btn-submit" onclick="analyze()">호가창 수급 진단하기</button>
+        <h3>2. 체결강도와 함께 보는 복합 진단 기준</h3>
+        <p>호가 잔량 비율은 반드시 <strong>체결강도(Volume Power)</strong>와 결합하여 검증해야 합니다.</p>
+        <ul>
+            <li><strong>매도잔량 우위 + 체결강도 100% 이상:</strong> 최상의 매수 타이밍. 매도벽을 뚫고 올라가는 강력한 수급 유입.</li>
+            <li><strong>매수잔량 우위 + 체결강도 90% 미만:</strong> 전형적인 허매수 함정. 반등 시 물량 청산 또는 관망 필요.</li>
+            <li><strong>체결강도 급증 + 거래량 폭발:</strong> 돌파 매매의 핵심 지표로 단기 시세 분출 초입 국면.</li>
+        </ul>
 
-  <div class="result-box" id="resultBox">
-    <div class="result-title" id="resTitle">진단 결과</div>
-    <div class="result-status" id="resStatus">수급 상태</div>
-    <div class="info-row"><span>매도 / 매수 잔량 비율</span><span class="val" id="resRatio">0%</span></div>
-    <div class="info-row"><span>단기 돌파 가격 (매도벽)</span><span class="val" id="resResist">-</span></div>
-    <div class="info-row"><span>단기 지지 가격 (매수벽)</span><span class="val" id="resSupport">-</span></div>
-    <div class="comment-box" id="resComment"></div>
-  </div>
+        <h3>3. 단타 매매 시 주의해야 할 호가 왜곡 패턴</h3>
+        <p>
+            특정 호가에 유독 비정상적으로 큰 물량이 걸려 있는 경우(라운드 피겨 호가 등)는 세력의 페이크일 수 있으므로, 해당 호가에 도달했을 때 <strong>체결 속도(체결 틱의 갱신 속도)</strong>가 급격히 빨라지는지 확인 후 진입하는 것이 안전합니다.
+        </p>
+    </div>
+
+    <footer>
+        <p>© 2026 multagicalc.com. All Rights Reserved. 본 서비스의 분석 결과는 투자 참고용이며 최종 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
+    </footer>
 </div>
 
 <script>
-  function cleanNum(val) {
-    if (!val) return 0;
-    return parseFloat(val.toString().replace(/,/g, '').trim()) || 0;
-  }
+function analyzeHoga() {
+    const sellQty = parseFloat(document.getElementById('sellQty').value);
+    const buyQty = parseFloat(document.getElementById('buyQty').value);
+    const strength = parseFloat(document.getElementById('strength').value);
 
-  function analyze() {
-    const stockName = document.getElementById('stockName').value.trim() || '보유 종목';
-    const currentPrice = cleanNum(document.getElementById('currentPrice').value);
-    const strength = cleanNum(document.getElementById('strength').value);
-    const totalSell = cleanNum(document.getElementById('totalSellQty').value);
-    const totalBuy = cleanNum(document.getElementById('totalBuyQty').value);
-    const resistPrice = cleanNum(document.getElementById('resistPrice').value);
-    const supportPrice = cleanNum(document.getElementById('supportPrice').value);
-
-    if (!currentPrice || !strength || !totalSell || !totalBuy) {
-      alert('현재가, 체결강도, 총 잔량을 모두 입력해 주세요.');
-      return;
+    if (isNaN(sellQty) || isNaN(buyQty) || isNaN(strength) || buyQty <= 0) {
+        alert('매도 총잔량, 매수 총잔량, 체결강도를 올바르게 입력해 주세요.');
+        return;
     }
 
-    const ratio = Math.round((totalSell / totalBuy) * 100);
-    const resBox = document.getElementById('resultBox');
-    const resStatus = document.getElementById('resStatus');
+    const ratio = ((sellQty / buyQty) * 100).toFixed(1);
+    const resultBox = document.getElementById('resultBox');
+    const badge = document.getElementById('statusBadge');
+    const ratioVal = document.getElementById('ratioVal');
+    const strengthVal = document.getElementById('strengthVal');
+    const diagnosisText = document.getElementById('diagnosisText');
 
-    document.getElementById('resTitle').innerText = `📈 ${stockName} 호가 수급 정밀 진단`;
-    document.getElementById('resRatio').innerText = `매도 잔량이 매수의 ${(ratio / 100).toFixed(1)}배 (${ratio}%)`;
-    document.getElementById('resResist').innerText = resistPrice ? `${resistPrice.toLocaleString()} 원` : '미입력 (자동 생략)';
-    document.getElementById('resSupport').innerText = supportPrice ? `${supportPrice.toLocaleString()} 원` : '미입력 (자동 생략)';
+    ratioVal.innerText = `${ratio}% (${sellQty > buyQty ? '매도벽 우세' : '매수받침 우세'})`;
+    strengthVal.innerText = `${strength}% (${strength >= 100 ? '매수 우위' : '매도 우위'})`;
 
-    resStatus.className = 'result-status';
+    resultBox.style.display = 'block';
 
-    if (totalSell > totalBuy * 1.5 && strength >= 100) {
-      resStatus.classList.add('status-bull');
-      resStatus.innerText = '🔥 강력 상승형 (세력 주가 견인)';
-      document.getElementById('resComment').innerHTML = `<strong>세력의 전형적인 상승 매집 호가창입니다.</strong><br>
-      위쪽 매도 잔량(총 ${totalSell.toLocaleString()}주)이 매수 잔량 대비 <strong>${(ratio / 100).toFixed(1)}배</strong> 많음에도 체결강도(${strength}%)가 100%를 넘습니다. 위쪽 저항 물량을 시장가로 흡수하며 끌어올리는 강력한 상승 흐름입니다.`;
-    } else if (totalBuy > totalSell * 1.5 && strength < 100) {
-      resStatus.classList.add('status-bear');
-      resStatus.innerText = '⚠️ 물량 떠넘기기 주의 (허매수 의심)';
-      document.getElementById('resComment').innerHTML = `<strong>개인 유인용 받침벽일 가능성이 높습니다.</strong><br>
-      아래쪽 매수 받침 잔량이 많으나 체결강도(${strength}%)가 100% 미만으로 부진합니다. 아래에 허매수를 대놓고 위에서 시장가로 매도 물량을 정리하는 패턴일 수 있습니다.`;
+    if (sellQty > (buyQty * 1.4) && strength >= 105) {
+        badge.className = 'status-badge badge-bull';
+        badge.innerText = '🔥 강력 매집 / 매도벽 돌파형 상승 흐름';
+        diagnosisText.innerHTML = `
+            <strong>[세력 매집 및 시세 견인 포착]</strong><br>
+            매도잔량이 매수잔량 대비 <strong>${ratio}%</strong>로 풍부하며, 체결강도가 <strong>${strength}%</strong>로 시장가 매수세가 강하게 유입 중입니다.<br>
+            ➔ 세력이 위쪽 매도벽을 흡수하며 상방 돌파를 시도하는 전형적인 급등형 수급 패턴입니다.
+        `;
+    } else if (buyQty > (sellQty * 1.4) && strength < 95) {
+        badge.className = 'status-badge badge-trap';
+        badge.innerText = '⚠️ 허매수 의심 / 물량 넘기기 주의 구간';
+        diagnosisText.innerHTML = `
+            <strong>[허매수 받침 함정 주의]</strong><br>
+            매수잔량이 비정상적으로 많으나 체결강도가 <strong>${strength}%</strong>로 매도세가 우세합니다.<br>
+            ➔ 아래에 받침 물량만 대놓고 위에서 시장가로 물량을 던지는 세력의 '물량 털기' 패턴일 가능성이 높으니 신규 진입을 자제하세요.
+        `;
     } else {
-      resStatus.classList.add('status-neutral');
-      resStatus.innerText = '⚖️ 단기 방향성 공방 구간';
-      document.getElementById('resComment').innerHTML = `<strong>매수와 매도 균형 구간입니다.</strong><br>
-      현재가(${currentPrice.toLocaleString()}원)를 기준으로 거래량이 터지며 어느 쪽 벽을 뚫는지 확인이 필요합니다.`;
+        badge.className = 'status-badge badge-bear';
+        badge.innerText = '⚖️ 수급 균형 / 방향성 탐색 구간';
+        diagnosisText.innerHTML = `
+            <strong>[횡보 및 방향성 모색]</strong><br>
+            호가 잔량 비율(${ratio}%)과 체결강도(${strength}%)가 팽팽하게 맞서고 있습니다.<br>
+            ➔ 특정 호가의 대량 물량이 체결되며 한쪽으로 힘이 쏠릴 때까지 관망을 권장합니다.
+        `;
     }
-
-    resBox.style.display = 'block';
-  }
+}
 </script>
+
 </body>
 </html>
