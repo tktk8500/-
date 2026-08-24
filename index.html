@@ -3,98 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>주식 물타기 계산기 - multagicalc.com</title>
+  <title>실시간 호가창 세력 & 매도벽 분석기</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif; background-color: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-    .card { background: #ffffff; padding: 32px 28px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px; }
-    .header { text-align: center; margin-bottom: 24px; }
-    h1 { font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px 0; }
-    .subtitle { font-size: 13px; color: #64748b; margin: 0; }
-    .input-group { margin-bottom: 16px; }
-    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #334155; }
-    input { width: 100%; padding: 12px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 15px; box-sizing: border-box; outline: none; transition: border-color 0.2s; }
-    input:focus { border-color: #2563eb; }
-    .input-row { display: flex; gap: 10px; }
-    .input-row .input-group { flex: 1; }
-    button { width: 100%; padding: 14px; background-color: #2563eb; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background-color 0.2s; }
-    button:hover { background-color: #1d4ed8; }
-    .result { margin-top: 24px; padding: 20px; background-color: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; display: none; }
-    .result-stock-title { font-size: 17px; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px dashed #cbd5e1; }
-    .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: #475569; }
-    .result-item.highlight { font-weight: 800; font-size: 17px; color: #2563eb; border-top: 1.5px solid #cbd5e1; padding-top: 12px; margin-top: 12px; }
+    :root {
+      --primary: #2563eb;
+      --sell-color: #3b82f6; /* 매도(파란색) */
+      --buy-color: #ef4444;  /* 매수(빨간색) */
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px 16px;
+      box-sizing: border-box;
+    }
+    .container {
+      background: var(--card-bg);
+      padding: 32px 24px;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+      width: 100%;
+      max-width: 480px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 0 6px 0;
+      color: #1e293b;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin: 0;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #334155;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: var(--primary);
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row .form-group {
+      flex: 1;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+    .btn-submit:hover {
+      background-color: #1d4ed8;
+    }
+    .result-box {
+      margin-top: 24px;
+      padding: 20px;
+      background-color: #f1f5f9;
+      border-radius: 14px;
+      display: none;
+    }
+    .result-title {
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed #cbd5e1;
+    }
+    .result-status {
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+    .status-bull { background-color: #fee2e2; color: #dc2626; }
+    .status-bear { background-color: #dbeafe; color: #2563eb; }
+    .status-neutral { background-color: #e2e8f0; color: #475569; }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #475569;
+    }
+    .info-row span.val {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .comment-box {
+      background: #ffffff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #334155;
+      margin-top: 12px;
+      border-left: 4px solid var(--primary);
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="header">
-      <h1>📊 주식 물타기 계산기</h1>
-      <p class="subtitle">보유 평단과 추가 매수를 반영한 최종 단가 산출</p>
+
+<div class="container">
+  <div class="header">
+    <h1>🔍 호가창 세력 & 매도벽 분석기</h1>
+    <p class="subtitle">잔량 비율과 체결강도로 읽는 단기 수급 흐름</p>
+  </div>
+
+  <div class="form-group">
+    <label for="stockName">종목명</label>
+    <input type="text" id="stockName" placeholder="예: 삼성전자, 한국전력">
+  </div>
+
+  <div class="row">
+    <div class="form-group">
+      <label for="currentPrice">현재가 (원)</label>
+      <input type="number" id="currentPrice" placeholder="예: 31850">
     </div>
-
-    <!-- 종목명 입력 필드 -->
-    <div class="input-group">
-      <label for="stockName">종목명 (선택)</label>
-      <input type="text" id="stockName" placeholder="예: 삼성전자, 에코프로">
-    </div>
-
-    <!-- 1차 보유 정보 -->
-    <div class="input-row">
-      <div class="input-group">
-        <label for="currentPrice">보유 평단가 (원)</label>
-        <input type="number" id="currentPrice" placeholder="50000">
-      </div>
-      <div class="input-group">
-        <label for="currentQty">보유 수량 (주)</label>
-        <input type="number" id="currentQty" placeholder="100">
-      </div>
-    </div>
-
-    <!-- 2차 추가매수 정보 -->
-    <div class="input-row">
-      <div class="input-group">
-        <label for="buyPrice">추가 매수가 (원)</label>
-        <input type="number" id="buyPrice" placeholder="40000">
-      </div>
-      <div class="input-group">
-        <label for="buyQty">추가 수량 (주)</label>
-        <input type="number" id="buyQty" placeholder="50">
-      </div>
-    </div>
-
-    <button onclick="calc()">평균단가 계산하기</button>
-
-    <!-- 결과 영역 -->
-    <div class="result" id="resultBox">
-      <div class="result-stock-title" id="resStockName">종목명</div>
-      <div class="result-item"><span>총 보유 수량</span><span id="totalQty">0주</span></div>
-      <div class="result-item"><span>총 매수 금액</span><span id="totalCost">0원</span></div>
-      <div class="result-item highlight"><span>최종 평균단가</span><span id="avgPrice">0원</span></div>
+    <div class="form-group">
+      <label for="strength">체결강도 (%)</label>
+      <input type="number" id="strength" placeholder="예: 120">
     </div>
   </div>
 
-  <script>
-    function calc() {
-      const stockName = document.getElementById('stockName').value.trim() || '보유 종목';
-      const p1 = Number(document.getElementById('currentPrice').value);
-      const q1 = Number(document.getElementById('currentQty').value);
-      const p2 = Number(document.getElementById('buyPrice').value);
-      const q2 = Number(document.getElementById('buyQty').value);
+  <div class="row">
+    <div class="form-group">
+      <label for="totalSellQty" style="color: var(--sell-color);">총 매도 잔량 (주)</label>
+      <input type="number" id="totalSellQty" placeholder="예: 250000">
+    </div>
+    <div class="form-group">
+      <label for="totalBuyQty" style="color: var(--buy-color);">총 매수 잔량 (주)</label>
+      <input type="number" id="totalBuyQty" placeholder="예: 100000">
+    </div>
+  </div>
 
-      if (!p1 || !q1 || !p2 || !q2) {
-        alert('단가와 수량을 모두 입력해 주세요.');
-        return;
-      }
+  <div class="row">
+    <div class="form-group">
+      <label for="resistPrice">가장 두터운 매도벽 호가</label>
+      <input type="number" id="resistPrice" placeholder="예: 32500">
+    </div>
+    <div class="form-group">
+      <label for="supportPrice">가장 두터운 매수벽 호가</label>
+      <input type="number" id="supportPrice" placeholder="예: 31500">
+    </div>
+  </div>
 
-      const totalQty = q1 + q2;
-      const totalCost = (p1 * q1) + (p2 * q2);
-      const avg = Math.round(totalCost / totalQty);
+  <button class="btn-submit" onclick="analyze()">호가창 수급 진단하기</button>
 
-      document.getElementById('resStockName').innerText = '📈 ' + stockName + ' 계산 결과';
-      document.getElementById('totalQty').innerText = totalQty.toLocaleString() + ' 주';
-      document.getElementById('totalCost').innerText = totalCost.toLocaleString() + ' 원';
-      document.getElementById('avgPrice').innerText = avg.toLocaleString() + ' 원';
-      document.getElementById('resultBox').style.display = 'block';
+  <div class="result-box" id="resultBox">
+    <div class="result-title" id="resTitle">종목명 진단 결과</div>
+    <div class="result-status" id="resStatus">수급 상태</div>
+
+    <div class="info-row">
+      <span>매도잔량 / 매수잔량 비율</span>
+      <span class="val" id="resRatio">0%</span>
+    </div>
+    <div class="info-row">
+      <span>단기 저항선 (매도벽)</span>
+      <span class="val" id="resResist">-</span>
+    </div>
+    <div class="info-row">
+      <span>단기 지지선 (매수벽)</span>
+      <span class="val" id="resSupport">-</span>
+    </div>
+
+    <div class="comment-box" id="resComment"></div>
+  </div>
+</div>
+
+<script>
+  function analyze() {
+    const stockName = document.getElementById('stockName').value.trim() || '입력 종목';
+    const currentPrice = Number(document.getElementById('currentPrice').value);
+    const strength = Number(document.getElementById('strength').value);
+    const totalSell = Number(document.getElementById('totalSellQty').value);
+    const totalBuy = Number(document.getElementById('totalBuyQty').value);
+    const resistPrice = Number(document.getElementById('resistPrice').value);
+    const supportPrice = Number(document.getElementById('supportPrice').value);
+
+    if (!currentPrice || !strength || !totalSell || !totalBuy) {
+      alert('현재가, 체결강도, 총 잔량을 모두 입력해 주세요.');
+      return;
     }
-  </script>
+
+    const ratio = Math.round((totalSell / totalBuy) * 100);
+    const resBox = document.getElementById('resultBox');
+    const resTitle = document.getElementById('resTitle');
+    const resStatus = document.getElementById('resStatus');
+    const resRatio = document.getElementById('resRatio');
+    const resResist = document.getElementById('resResist');
+    const resSupport = document.getElementById('resSupport');
+    const resComment = document.getElementById('resComment');
+
+    resTitle.innerText = `📈 ${stockName} 수급 분석`;
+    resRatio.innerText = `매도 잔량이 매수의 ${(ratio / 100).toFixed(1)}배 (${ratio}%)`;
+    resResist.innerText = resistPrice ? `${resistPrice.toLocaleString()} 원` : '미입력';
+    resSupport.innerText = supportPrice ? `${supportPrice.toLocaleString()} 원` : '미입력';
+
+    resStatus.className = 'result-status';
+
+    // 호가창 세력 패턴 분석 로직
+    if (totalSell > totalBuy * 1.5 && strength >= 100) {
+      resStatus.classList.add('status-bull');
+      resStatus.innerText = '🔥 상승 유력 (진성 매수세 유입)';
+      resComment.innerHTML = `<strong>세력의 전형적인 상승 매집 호가창 패턴입니다.</strong><br>
+      매도 잔량이 매수 잔량보다 훨씬 많음에도 체결강도(${strength}%)가 강하다는 것은, 세력이 위쪽 매도 물량을 능동적으로 먹어치우며 주가를 들어올리고 있음을 의미합니다.`;
+    } else if (totalBuy > totalSell * 1.5 && strength < 100) {
+      resStatus.classList.add('status-bear');
+      resStatus.innerText = '⚠️ 하락/물량받이 주의 (허매수 의심)';
+      resComment.innerHTML = `<strong>개인 유인용 허매수벽일 가능성이 높습니다.</strong><br>
+      밑에 매수 받침 물량은 두터우나 체결강도(${strength}%)가 약세입니다. 세력이 아래에 매수벽을 대놓고 위에서 시장가로 물량을 던지는 전형적인 물량 넘기기 패턴일 수 있습니다.`;
+    } else {
+      resStatus.classList.add('status-neutral');
+      resStatus.innerText = '⚖️ 단기 방향성 탐색 (혼조세)';
+      resComment.innerHTML = `<strong>매수/매도 공방 구간입니다.</strong><br>
+      현재가(${currentPrice.toLocaleString()}원)를 기준으로 저항벽(${resistPrice ? resistPrice.toLocaleString() + '원' : '상단'} ) 돌파 시 시장가 매수세가 붙는지 추가 관찰이 필요합니다.`;
+    }
+
+    resBox.style.display = 'block';
+  }
+</script>
+
 </body>
 </html>
