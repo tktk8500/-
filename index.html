@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>실시간 호가창 세력 & 매도벽 분석기</title>
+  <title>실시간 호가창 세력 & 수급 분석기 - multagicalc.com</title>
   <style>
     :root {
       --primary: #2563eb;
-      --sell-color: #3b82f6; /* 매도(파란색) */
-      --buy-color: #ef4444;  /* 매수(빨간색) */
+      --sell-color: #2563eb;
+      --buy-color: #dc2626;
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --border: #e2e8f0;
+      --border: #cbd5e1;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
@@ -23,125 +23,63 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      padding: 24px 16px;
+      padding: 20px 16px;
       box-sizing: border-box;
     }
     .container {
       background: var(--card-bg);
-      padding: 32px 24px;
-      border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+      padding: 30px 22px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       width: 100%;
       max-width: 480px;
     }
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    h1 {
-      font-size: 22px;
-      font-weight: 800;
-      margin: 0 0 6px 0;
-      color: #1e293b;
-    }
-    .subtitle {
-      font-size: 13px;
-      color: #64748b;
-      margin: 0;
-    }
-    .form-group {
-      margin-bottom: 14px;
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 5px;
-      color: #334155;
-    }
+    .header { text-align: center; margin-bottom: 20px; }
+    h1 { font-size: 20px; font-weight: 800; margin: 0 0 6px 0; }
+    .subtitle { font-size: 12.5px; color: #64748b; margin: 0; }
+    .form-group { margin-bottom: 14px; position: relative; }
+    label { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; color: #334155; }
+    .guide-tip { font-size: 11px; color: #64748b; font-weight: normal; }
     input {
       width: 100%;
-      padding: 12px 14px;
+      padding: 11px 12px;
       border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 14px;
       box-sizing: border-box;
       outline: none;
-      transition: border-color 0.2s;
     }
-    input:focus {
-      border-color: var(--primary);
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-    }
-    .row .form-group {
-      flex: 1;
-    }
+    input:focus { border-color: var(--primary); }
+    .row { display: flex; gap: 10px; }
+    .row .form-group { flex: 1; }
     .btn-submit {
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       background-color: var(--primary);
       color: #ffffff;
       border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.2s;
+      margin-top: 6px;
     }
-    .btn-submit:hover {
-      background-color: #1d4ed8;
-    }
+    .btn-submit:hover { background-color: #1d4ed8; }
     .result-box {
-      margin-top: 24px;
-      padding: 20px;
+      margin-top: 20px;
+      padding: 18px;
       background-color: #f1f5f9;
-      border-radius: 14px;
+      border-radius: 12px;
       display: none;
     }
-    .result-title {
-      font-size: 16px;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1.5px dashed #cbd5e1;
-    }
-    .result-status {
-      font-size: 18px;
-      font-weight: 800;
-      text-align: center;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 14px;
-    }
+    .result-title { font-size: 15px; font-weight: 800; text-align: center; margin-bottom: 12px; }
+    .result-status { font-size: 16px; font-weight: 800; text-align: center; padding: 10px; border-radius: 8px; margin-bottom: 12px; }
     .status-bull { background-color: #fee2e2; color: #dc2626; }
     .status-bear { background-color: #dbeafe; color: #2563eb; }
     .status-neutral { background-color: #e2e8f0; color: #475569; }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      margin-bottom: 8px;
-      color: #475569;
-    }
-    .info-row span.val {
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .comment-box {
-      background: #ffffff;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #334155;
-      margin-top: 12px;
-      border-left: 4px solid var(--primary);
-    }
+    .info-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; color: #475569; }
+    .info-row span.val { font-weight: 700; color: #0f172a; }
+    .comment-box { background: #ffffff; padding: 12px; border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: #334155; margin-top: 10px; border-left: 3px solid var(--primary); }
   </style>
 </head>
 <body>
@@ -149,75 +87,65 @@
 <div class="container">
   <div class="header">
     <h1>🔍 호가창 세력 & 매도벽 분석기</h1>
-    <p class="subtitle">잔량 비율과 체결강도로 읽는 단기 수급 흐름</p>
+    <p class="subtitle">HTS 호가창 데이터를 기반으로 한 세력 수급 진단</p>
   </div>
 
   <div class="form-group">
     <label for="stockName">종목명</label>
-    <input type="text" id="stockName" placeholder="예: 삼성전자, 한국전력">
+    <input type="text" id="stockName" placeholder="예: 한국전력, 삼성전자">
   </div>
 
   <div class="row">
     <div class="form-group">
       <label for="currentPrice">현재가 (원)</label>
-      <input type="number" id="currentPrice" placeholder="예: 31850">
+      <input type="number" id="currentPrice" placeholder="예: 32150">
     </div>
     <div class="form-group">
-      <label for="strength">체결강도 (%)</label>
-      <input type="number" id="strength" placeholder="예: 120">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group">
-      <label for="totalSellQty" style="color: var(--sell-color);">총 매도 잔량 (주)</label>
-      <input type="number" id="totalSellQty" placeholder="예: 250000">
-    </div>
-    <div class="form-group">
-      <label for="totalBuyQty" style="color: var(--buy-color);">총 매수 잔량 (주)</label>
-      <input type="number" id="totalBuyQty" placeholder="예: 100000">
+      <label for="strength">체결강도 (%) <span class="guide-tip">우측 상단 %</span></label>
+      <input type="number" step="any" id="strength" placeholder="예: 129.77">
     </div>
   </div>
 
   <div class="row">
     <div class="form-group">
-      <label for="resistPrice">가장 두터운 매도벽 호가</label>
-      <input type="number" id="resistPrice" placeholder="예: 32500">
+      <label for="totalSellQty" style="color: var(--sell-color);">총 매도 잔량 <span class="guide-tip">호가창 맨밑 좌측</span></label>
+      <input type="number" id="totalSellQty" placeholder="예: 38338">
     </div>
     <div class="form-group">
-      <label for="supportPrice">가장 두터운 매수벽 호가</label>
-      <input type="number" id="supportPrice" placeholder="예: 31500">
+      <label for="totalBuyQty" style="color: var(--buy-color);">총 매수 잔량 <span class="guide-tip">호가창 맨밑 우측</span></label>
+      <input type="number" id="totalBuyQty" placeholder="예: 14792">
+    </div>
+  </div>
+
+  <!-- 초보자도 쉽게 알 수 있도록 명칭 변경 -->
+  <div class="row">
+    <div class="form-group">
+      <label for="resistPrice">위쪽 최대 물량 가격 <span class="guide-tip">(매도벽/선택)</span></label>
+      <input type="number" id="resistPrice" placeholder="파란색 막대 가장 긴 가격 (예: 32400)">
+    </div>
+    <div class="form-group">
+      <label for="supportPrice">아래쪽 최대 받침 가격 <span class="guide-tip">(매수벽/선택)</span></label>
+      <input type="number" id="supportPrice" placeholder="붉은색 막대 가장 긴 가격 (예: 32050)">
     </div>
   </div>
 
   <button class="btn-submit" onclick="analyze()">호가창 수급 진단하기</button>
 
   <div class="result-box" id="resultBox">
-    <div class="result-title" id="resTitle">종목명 진단 결과</div>
+    <div class="result-title" id="resTitle">진단 결과</div>
     <div class="result-status" id="resStatus">수급 상태</div>
-
-    <div class="info-row">
-      <span>매도잔량 / 매수잔량 비율</span>
-      <span class="val" id="resRatio">0%</span>
-    </div>
-    <div class="info-row">
-      <span>단기 저항선 (매도벽)</span>
-      <span class="val" id="resResist">-</span>
-    </div>
-    <div class="info-row">
-      <span>단기 지지선 (매수벽)</span>
-      <span class="val" id="resSupport">-</span>
-    </div>
-
+    <div class="info-row"><span>매도 / 매수 잔량 비율</span><span class="val" id="resRatio">0%</span></div>
+    <div class="info-row"><span>단기 저항 가격 (매도벽)</span><span class="val" id="resResist">-</span></div>
+    <div class="info-row"><span>단기 방어 가격 (매수벽)</span><span class="val" id="resSupport">-</span></div>
     <div class="comment-box" id="resComment"></div>
   </div>
 </div>
 
 <script>
   function analyze() {
-    const stockName = document.getElementById('stockName').value.trim() || '입력 종목';
+    const stockName = document.getElementById('stockName').value.trim() || '보유 종목';
     const currentPrice = Number(document.getElementById('currentPrice').value);
-    const strength = Number(document.getElementById('strength').value);
+    const strength = parseFloat(document.getElementById('strength').value);
     const totalSell = Number(document.getElementById('totalSellQty').value);
     const totalBuy = Number(document.getElementById('totalBuyQty').value);
     const resistPrice = Number(document.getElementById('resistPrice').value);
@@ -230,41 +158,34 @@
 
     const ratio = Math.round((totalSell / totalBuy) * 100);
     const resBox = document.getElementById('resultBox');
-    const resTitle = document.getElementById('resTitle');
     const resStatus = document.getElementById('resStatus');
-    const resRatio = document.getElementById('resRatio');
-    const resResist = document.getElementById('resResist');
-    const resSupport = document.getElementById('resSupport');
-    const resComment = document.getElementById('resComment');
 
-    resTitle.innerText = `📈 ${stockName} 수급 분석`;
-    resRatio.innerText = `매도 잔량이 매수의 ${(ratio / 100).toFixed(1)}배 (${ratio}%)`;
-    resResist.innerText = resistPrice ? `${resistPrice.toLocaleString()} 원` : '미입력';
-    resSupport.innerText = supportPrice ? `${supportPrice.toLocaleString()} 원` : '미입력';
+    document.getElementById('resTitle').innerText = `📈 ${stockName} 호가 수급 정밀 진단`;
+    document.getElementById('resRatio').innerText = `매도 잔량이 매수의 ${(ratio / 100).toFixed(1)}배 (${ratio}%)`;
+    document.getElementById('resResist').innerText = resistPrice ? `${resistPrice.toLocaleString()} 원` : '미입력 (자동 생략)';
+    document.getElementById('resSupport').innerText = supportPrice ? `${supportPrice.toLocaleString()} 원` : '미입력 (자동 생략)';
 
     resStatus.className = 'result-status';
 
-    // 호가창 세력 패턴 분석 로직
     if (totalSell > totalBuy * 1.5 && strength >= 100) {
       resStatus.classList.add('status-bull');
-      resStatus.innerText = '🔥 상승 유력 (진성 매수세 유입)';
-      resComment.innerHTML = `<strong>세력의 전형적인 상승 매집 호가창 패턴입니다.</strong><br>
-      매도 잔량이 매수 잔량보다 훨씬 많음에도 체결강도(${strength}%)가 강하다는 것은, 세력이 위쪽 매도 물량을 능동적으로 먹어치우며 주가를 들어올리고 있음을 의미합니다.`;
+      resStatus.innerText = '🔥 강력 상승형 (세력 주가 견인)';
+      document.getElementById('resComment').innerHTML = `<strong>세력의 전형적인 상승 매집 호가창입니다.</strong><br>
+      위쪽 매도 잔량(총 ${totalSell.toLocaleString()}주)이 매수 잔량 대비 <strong>${(ratio / 100).toFixed(1)}배</strong> 많음에도 체결강도(${strength}%)가 100%를 넘습니다. 위쪽 저항 물량을 시장가로 흡수하며 끌어올리는 강력한 상승 흐름입니다.`;
     } else if (totalBuy > totalSell * 1.5 && strength < 100) {
       resStatus.classList.add('status-bear');
-      resStatus.innerText = '⚠️ 하락/물량받이 주의 (허매수 의심)';
-      resComment.innerHTML = `<strong>개인 유인용 허매수벽일 가능성이 높습니다.</strong><br>
-      밑에 매수 받침 물량은 두터우나 체결강도(${strength}%)가 약세입니다. 세력이 아래에 매수벽을 대놓고 위에서 시장가로 물량을 던지는 전형적인 물량 넘기기 패턴일 수 있습니다.`;
+      resStatus.innerText = '⚠️ 물량 떠넘기기 주의 (허매수 의심)';
+      document.getElementById('resComment').innerHTML = `<strong>개인 유인용 받침벽일 가능성이 높습니다.</strong><br>
+      아래쪽 매수 받침 잔량이 많으나 체결강도(${strength}%)가 100% 미만으로 부진합니다. 아래에 허매수를 대놓고 위에서 시장가로 매도 물량을 정리하는 패턴일 수 있습니다.`;
     } else {
       resStatus.classList.add('status-neutral');
-      resStatus.innerText = '⚖️ 단기 방향성 탐색 (혼조세)';
-      resComment.innerHTML = `<strong>매수/매도 공방 구간입니다.</strong><br>
-      현재가(${currentPrice.toLocaleString()}원)를 기준으로 저항벽(${resistPrice ? resistPrice.toLocaleString() + '원' : '상단'} ) 돌파 시 시장가 매수세가 붙는지 추가 관찰이 필요합니다.`;
+      resStatus.innerText = '⚖️ 단기 방향성 공방 구간';
+      document.getElementById('resComment').innerHTML = `<strong>매수와 매도 균형 구간입니다.</strong><br>
+      현재가(${currentPrice.toLocaleString()}원)를 기준으로 거래량이 터지며 어느 쪽 벽을 뚫는지 확인이 필요합니다.`;
     }
 
     resBox.style.display = 'block';
   }
 </script>
-
 </body>
 </html>
