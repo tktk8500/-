@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시간대별 호가 신뢰도 및 거래 세션 분석 | multagicalc</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.9; color: #334155; background: #f8fafc; padding: 30px 20px; }
+        .container { max-width: 840px; margin: 0 auto; background: #fff; padding: 45px; border-radius: 14px; border: 1px solid #e2e8f0; }
+        h1 { font-size: 1.85rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 24px; }
+        h2 { font-size: 1.35rem; color: #2563eb; margin-top: 36px; margin-bottom: 14px; border-left: 4px solid #2563eb; padding-left: 10px; }
+        p { margin-bottom: 16px; font-size: 1rem; color: #475569; }
+        table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.93rem; }
+        th, td { border: 1px solid #cbd5e1; padding: 12px; text-align: center; }
+        th { background: #f1f5f9; color: #1e293b; font-weight: 700; }
+        .time-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 18px; }
+        nav { margin-bottom: 30px; font-size: 0.95rem; }
+        nav a { color: #2563eb; text-decoration: none; font-weight: 600; margin-right: 14px; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 0.85rem; color: #94a3b8; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <a href="index.html">← 메인 수급 진단기</a>
+        <a href="article1.html">체결강도 완전정복</a>
+        <a href="article2.html">허매수·허매도 구별법</a>
+        <a href="article3.html">호가 왜곡 패턴 5선</a>
+        <a href="article5.html">수급 결합 실전 전략</a>
+    </nav>
+
+    <h1>정규장 시간대별 호가창 데이터 신뢰도와 트레이딩 세션별 전략</h1>
+
+    <h2>1. 주식 시장은 시간에 따라 지배하는 주체가 바뀐다</h2>
+    <p>
+        수많은 초보 단타 매매자들은 오전 9시 10분의 호가창과 오후 1시 30분의 호가창을 동일한 기준으로 해석하는 치명적인 실수를 저지릅니다. 한국 주식 시장(09:00 ~ 15:30)은 시간대별로 거래대금의 유입 강도, 참여자들의 구성비(단타 개미, 기관 프로그램, 데스크 트레이더, 외국인 패시브 자금), 그리고 스프레드(호가 간격)의 밀도가 완전히 달라집니다.
+    </p>
+
+    <h2>2. 시간대별 호가 신뢰도 매트릭스</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>시간대</th>
+                <th>시장 특성</th>
+                <th>호가 신뢰도</th>
+                <th>주요 대응 가이드</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>09:00 ~ 09:20</strong></td>
+                <td>장초반 변동성 극대화 및 갭 메우기</td>
+                <td>보통 (왜곡 주의)</td>
+                <td>시가 지지 여부 확인 후 3분봉 완성 대응</td>
+            </tr>
+            <tr>
+                <td><strong>09:20 ~ 10:30</strong></td>
+                <td>당일 주도주 확정 및 진짜 수급 결집</td>
+                <td><strong>최상 (골든 세션)</strong></td>
+                <td>호가 잔량비 1.5배 돌파 적극 공략</td>
+            </tr>
+            <tr>
+                <td><strong>10:30 ~ 13:30</strong></td>
+                <td>거래량 급감 및 지루한 횡보/밀림</td>
+                <td><strong>최하 (함정 다수)</strong></td>
+                <td>원칙적 매매 중단 및 관망 유지</td>
+            </tr>
+            <tr>
+                <td><strong>13:30 ~ 15:00</strong></td>
+                <td>오후장 재반등 및 상한가 굳히기</td>
+                <td>상 (선별적 접근)</td>
+                <td>오전 고점 재돌파 종목 위주 압축</td>
+            </tr>
+            <tr>
+                <td><strong>15:00 ~ 15:30</strong></td>
+                <td>종가 베팅 및 익일 갭 기대감 형성</td>
+                <td>중 (수급 왜곡 주의)</td>
+                <td>시간외 단일가 및 동시호가 고려 분할</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. 세션별 세부 행동 요령</h2>
+    <div class="time-box">
+        <h3>골든 타임 (09:20 ~ 10:30): 통계적 승률이 가장 높은 구간</h3>
+        <p>
+            장 시작 직후 20분이 지나면 밤사이 발생한 뉴스에 의한 일회성 거품이 걷히고, 당일 시장의 자금을 독식하는 '진짜 주도 테마'가 윤곽을 드러냅니다. 이때 거래대금 상위 1~10위 종목 중에서 매도 총잔량이 매수 총잔량보다 140% 이상 두텁고 체결강도가 105%를 유지하는 종목을 공략하면 속임수 없이 정직한 슈팅을 취할 수 있습니다.
+        </p>
+    </div>
+
+    <div class="time-box">
+        <h3>데드 존 (11:00 ~ 13:30): 계좌가 녹아내리는 점심 세션</h3>
+        <p>
+            거래대금이 바닥을 치는 시간대입니다. 호가창에 물량이 몇백 주밖에 없어 작은 매수세에도 1~2% 튀어 올랐다가 금방 제자리로 떨어집니다. 이 시간대에 호가창을 보고 돌파 매수를 시도하면 체결 오차(슬리피지)로 인해 매수하자마자 -1% 손실로 시작하게 됩니다. 고수 트레이더들이 점심시간에 HTS를 끄는 이유입니다.
+        </p>
+    </div>
+
+    <footer>
+        <p>© 2026 multagicalc.com. All Rights Reserved. 본 가이드의 통계 분석 결과는 투자 참고용이며 최종 법적 책임은 투자자 본인에게 있습니다.</p>
+    </footer>
+</div>
+</body>
+</html>
