@@ -57,7 +57,34 @@
             margin-top: 0;
         }
 
-        /* 심사 봇 첫 진입 시 '콘텐츠 없음' 오판을 막아주는 상단 본문 */
+        /* 상단 메뉴 네비게이션 */
+        nav.main-nav {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        nav.main-nav a {
+            margin: 0 10px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        nav.main-nav a.active {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        nav.main-nav a:hover {
+            color: var(--accent-blue);
+        }
+
         .top-notice-box {
             background-color: #eff6ff;
             border: 1px solid #bfdbfe;
@@ -298,7 +325,6 @@
             margin: 0;
         }
 
-        /* 하단 정책 본문 노출 구역 */
         .legal-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
@@ -337,7 +363,15 @@
         <p>10호가 총잔량 비율과 실시간 체결강도로 세력의 매집과 허매수 함정을 판별합니다.</p>
     </header>
 
-    <!-- 구글 봇 회피용 상단 핵심 서론 -->
+    <!-- 구글 봇이 즉시 포털 구조로 인식하게 만드는 상단 네비게이션 메뉴 -->
+    <nav class="main-nav">
+        <a href="index.html" class="active">🏠 수급 진단기</a> |
+        <a href="article1.html">체결강도 완전정복</a> |
+        <a href="article2.html">허매수·허매도 구별법</a> |
+        <a href="article3.html">호가 왜곡 패턴 5선</a>
+    </nav>
+
+    <!-- 상단 핵심 요약 본문 -->
     <div class="top-notice-box">
         <strong>💡 실시간 호가 잔량 분석의 핵심 원리:</strong> 주식 단타 매매 시 매수 대기 물량이 많으면 주가가 오를 것처럼 보이지만, 실제 세력의 급등 패턴은 <strong>'매도 총잔량이 매수 총잔량보다 1.4배 이상 많으면서 체결강도가 105%를 넘길 때'</strong> 발생합니다. 상단 매도벽을 시장가로 직접 먹어치우며 시세를 견인하기 때문입니다. 본 진단기는 이 실시간 호가 불균형을 즉시 분석해 드립니다.
     </div>
@@ -463,7 +497,7 @@
         </div>
     </div>
 
-    <!-- 3. 구글 심사 봇이 완벽히 크롤링할 수 있도록 실제 본문으로 노출된 3대 정책 -->
+    <!-- 3. 법적 필수 정책 전문 (구글 크롤러 인식용) -->
     <div class="legal-card">
         <h4>서비스 소개 (About Us)</h4>
         <p><strong>multagicalc</strong>는 개인 투자자들의 합리적인 매매 판단을 돕기 위해 실시간 10단계 호가 잔량 및 체결강도 기반 수급 분석 도구를 무료로 제공하는 웹 플랫폼입니다. 시장 데이터의 왜곡(허매수 받침, 대량 매도벽 등)을 사전에 인지하고 객관적인 지표로 리스크를 관리할 수 있도록 지원합니다.</p>
