@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>체결강도 완전 정복 가이드 | multagicalc</title>
+    <title>체결강도(Volume Power) 실전 완성 가이드 | multagicalc</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.85; color: #334155; background: #f8fafc; padding: 30px 20px; }
-        .container { max-width: 820px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 14px; border: 1px solid #e2e8f0; }
-        h1 { font-size: 1.8rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 20px; }
-        h2 { font-size: 1.3rem; color: #2563eb; margin-top: 30px; margin-bottom: 12px; }
-        h3 { font-size: 1.1rem; color: #0f172a; margin-top: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.9; color: #334155; background: #f8fafc; padding: 30px 20px; }
+        .container { max-width: 840px; margin: 0 auto; background: #fff; padding: 45px; border-radius: 14px; border: 1px solid #e2e8f0; }
+        h1 { font-size: 1.85rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 24px; }
+        h2 { font-size: 1.35rem; color: #2563eb; margin-top: 36px; margin-bottom: 14px; border-left: 4px solid #2563eb; padding-left: 10px; }
+        h3 { font-size: 1.12rem; color: #0f172a; margin-top: 24px; margin-bottom: 8px; }
         p { margin-bottom: 16px; font-size: 1rem; color: #475569; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.92rem; }
+        ul, ol { margin-left: 22px; margin-bottom: 20px; color: #475569; }
+        li { margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.93rem; }
         th, td { border: 1px solid #cbd5e1; padding: 12px; text-align: center; }
         th { background: #f1f5f9; color: #1e293b; font-weight: 700; }
-        .highlight-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 18px; border-radius: 0 8px 8px 0; margin: 20px 0; }
-        nav { margin-bottom: 25px; font-size: 0.95rem; }
-        nav a { color: #2563eb; text-decoration: none; font-weight: 600; margin-right: 12px; }
+        .callout { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; border-radius: 0 8px 8px 0; margin: 24px 0; }
+        .faq-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 14px; }
+        .faq-q { font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+        .faq-a { font-size: 0.94rem; color: #475569; margin-bottom: 0; }
+        nav { margin-bottom: 30px; font-size: 0.95rem; }
+        nav a { color: #2563eb; text-decoration: none; font-weight: 600; margin-right: 14px; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 0.85rem; color: #94a3b8; }
     </style>
 </head>
 <body>
@@ -24,64 +30,97 @@
     <nav>
         <a href="index.html">← 메인 수급 진단기</a>
         <a href="article2.html">허매수·허매도 구별법</a>
-        <a href="article3.html">호가 왜곡 패턴 5가지</a>
+        <a href="article3.html">호가 왜곡 패턴 5선</a>
+        <a href="article4.html">시간대별 호가 신뢰도</a>
+        <a href="article5.html">수급 결합 실전 전략</a>
     </nav>
 
-    <h1>체결강도(Volume Power) 완전 정복: 원리부터 실전 매매까지</h1>
+    <h1>체결강도(Volume Power)의 통계적 원리와 실전 데이트레이딩 완벽 가이드</h1>
 
-    <h2>1. 체결강도의 수학적 원리와 수식 구조</h2>
+    <h2>1. 체결강도의 산출 메커니즘과 호가 엔진의 동작 원리</h2>
     <p>
-        체결강도는 시장 참여자들의 심리와 공격성을 가장 객관적으로 나타내는 거래소 실시간 지표입니다. 한국거래소(KRX) 시스템에서 체결강도는 <strong>(총 매수 체결량 / 총 매도 체결량) × 100</strong>의 수식으로 산출됩니다. 
+        데이트레이딩과 스캘핑의 세계에서 가장 빈번하게 오용되는 지표가 바로 체결강도입니다. 한국거래소(KRX) 전산 엔진에서 집계되는 체결강도의 수학적 표준 정의는 <strong>[누적 시장가 매수 체결량 / 누적 시장가 매도 체결량] × 100</strong>입니다. 이는 단순한 가격의 등락률이 아닌, 매도 호가를 직접 위로 가격을 올려가며 사들인 적극적 공격 매수세(Taker Buy)와 하단 매수 호가에 가격을 낮춰가며 던져버린 공격적 매도세(Taker Sell) 사이의 상대적 운동 에너지를 측정한 값입니다.
     </p>
     <p>
-        여기서 '매수 체결'이란 호가창의 위쪽 매도 호가를 시장가로 직접 긁어가는 공격적인 매수세를 뜻하며, '매도 체결'이란 호가창의 아래쪽 매수 받침 물량에 시장가로 집어던지는 투매를 의미합니다. 즉, 체결강도가 100%를 초과한다는 것은 매도 물량을 능동적으로 집어삼키는 매수 주체가 더 많음을 뜻합니다.
+        호가창 상단에 매도 10단계, 하단에 매수 10단계가 정렬되어 있을 때, 체결강도가 100%라는 것은 매수자와 매도자의 공격적 시장가 주문량이 정확히 1:1로 팽팽한 균형을 유지하고 있음을 뜻합니다. 반면 체결강도가 120%를 돌파한다는 것은 장 개시 이후 위쪽 매도벽을 능동적으로 걷어간 자금의 규모가 아래로 투매된 자금보다 1.2배 더 많다는 뜻이며, 이는 주도 세력의 집중적인 매집과 주가 견인 의지를 반영하는 직접적인 수치입니다.
     </p>
 
-    <h2>2. 체결강도 구간별 시장 심리 매트릭스</h2>
+    <h2>2. 체결강도 구간별 시장 심리와 데이터 매트릭스</h2>
     <table>
         <thead>
             <tr>
                 <th>체결강도 구간</th>
-                <th>주도 세력 성향</th>
-                <th>주가 변동 가능성</th>
-                <th>실전 대응 권장</th>
+                <th>주도 주체 성향</th>
+                <th>상승 지속성 판정</th>
+                <th>실전 권장 행동</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><strong>120% 이상</strong></td>
-                <td>기관/외인/세력의 강력 시장가 매집</td>
-                <td>상방 랠리 및 변동성 확대</td>
-                <td>추세 추종 적극 진입 구간</td>
+                <td><strong>140% 이상</strong></td>
+                <td>기관/외인/기관형 세력의 쓸어담기</td>
+                <td>상승 파동 분출 (과열 주의)</td>
+                <td>돌파 틱 추종 매수 또는 트레일링 스탑</td>
             </tr>
             <tr>
-                <td><strong>100% ~ 119%</strong></td>
-                <td>매수 우위 속 매물 흡수 단계</td>
-                <td>완만한 상승 또는 횡보 상향</td>
-                <td>매도벽 비율 교차 검증 후 진입</td>
+                <td><strong>110% ~ 139%</strong></td>
+                <td>안정적 상단 매물 흡수 단계</td>
+                <td>지속적 우상향 추세 유지</td>
+                <td>눌림목 지지선 확인 후 최적의 진입</td>
             </tr>
             <tr>
-                <td><strong>80% ~ 99%</strong></td>
+                <td><strong>95% ~ 109%</strong></td>
+                <td>방향성 모색 및 매수·매도 팽팽</td>
+                <td>박스권 횡보 흐름</td>
+                <td>호가 잔량비 확인 전까지 관망</td>
+            </tr>
+            <tr>
+                <td><strong>80% ~ 94%</strong></td>
                 <td>단기 차익 실현 매물 출회</td>
-                <td>지지선 이탈 테스트</td>
-                <td>신규 진입 자제 및 관망</td>
+                <td>하방 압력 및 호가 밀림</td>
+                <td>기보유 물량 분할 청산 준비</td>
             </tr>
             <tr>
                 <td><strong>80% 미만</strong></td>
-                <td>시장가 투매 발생 (패닉 셀)</td>
-                <td>계단식 하락 급증</td>
-                <td>원칙 손절 및 절대 진입 금지</td>
+                <td>시장가 패닉 셀 및 투매 가속</td>
+                <td>계단식 붕괴 및 저점 이탈</td>
+                <td>신규 진입 절대 금지 / 원칙적 칼손절</td>
             </tr>
         </tbody>
     </table>
 
-    <h2>3. 체결강도 분석 시 반드시 피해야 할 '착시 현상'</h2>
+    <h2>3. 체결강도의 치명적인 착시 현상 3가지와 필터링 기법</h2>
     <p>
-        많은 단타 투자자들이 범하는 실수는 '장 초반 단 1~2건의 대형 체결로 인한 왜곡'을 간과하는 것입니다. 오전 09:00~09:05 구간에는 누적 거래량이 적기 때문에, 단 5,000주의 시장가 매수만으로도 체결강도가 300%~500%까지 치솟을 수 있습니다. 
+        체결강도는 매우 강력한 지표이지만 맹신해서는 안 되는 세 가지 기술적 한계를 지니고 있습니다. 이를 사전에 필터링하지 못하면 고점 물량 떠넘기기의 희생양이 되기 쉽습니다.
     </p>
-    <div class="highlight-box">
-        <strong>💡 핵심 실전 팁:</strong> 신뢰도 높은 체결강도는 최소 <strong>장 시작 15분 이후(09:15~)</strong> 당일 거래량이 직전 거래일 대비 50% 이상 터진 시점부터 유효합니다. 거래량이 실리지 않은 높은 체결강도는 허상에 불과합니다.
+    <ul>
+        <li><strong>장 초반(09:00~09:10) 표본 부족의 왜곡:</strong> 개장 직후에는 누적 거래량이 매우 적습니다. 단 10,000주의 시장가 매수 한 번만으로도 체결강도는 400%~800%까지 치솟을 수 있습니다. 이는 실질적인 매수세가 아니라 통계 표본 부족에 따른 착시이므로, 최소 당일 누적 거래량이 전일 대비 20% 이상 쌓이는 09:15 이전에는 체결강도 절대 수치보다 갱신 기울기(추세선)를 관찰해야 합니다.</li>
+        <li><strong>누적 분모 둔화 현상:</strong> 오후장으로 갈수록 하루 종일 누적된 거래대금 분모가 비대해집니다. 따라서 오후 2시 이후에는 수백억 원의 시장가 매수가 유입되어도 체결강도가 겨우 1~2% 상승하는 데 그칩니다. 오후장에서는 누적 체결강도 대신 '최근 3분 순간 체결강도'를 보조 지표로 확인하는 것이 필수적입니다.</li>
+        <li><strong>허매도 벽 흡수를 가장한 자전거래:</strong> 세력이 본인의 매도 물량을 본인의 다른 계좌로 시장가 매수하는 자전거래(Wash Sale)를 집행할 경우, 거래대금과 체결강도가 인위적으로 폭증합니다. 이때는 호가창 틱 속도와 더불어 매수 주체 창구(신한, 미래, 키움 등)의 분산 여부를 동시에 대조해야 합니다.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>💡 실전 트레이더의 황금 매매 수칙:</strong><br>
+        체결강도 수치 하나만 보고 진입하는 것은 도박입니다. 반드시 <strong>"매도 총잔량이 매수 총잔량보다 1.5배 이상 두텁게 쌓여 있는가?"</strong>와 <strong>"현재가가 당일 시가 및 당일 고점 부근에 위치해 있는가?"</strong>라는 두 가지 절대 조건을 만족할 때만 체결강도 105% 상향 돌파를 진짜 타점으로 인정해야 합니다.
     </div>
+
+    <h2>4. 체결강도 관련 자주 묻는 질문 (FAQ)</h2>
+    <div class="faq-box">
+        <div class="faq-q">Q1. 체결강도가 150%인데 주가가 하락하는 기현상은 왜 발생하나요?</div>
+        <p class="faq-a">A. 장 초반 200%에 육박했던 체결강도가 150%로 서서히 낮아지고 있는 하향 곡선일 때 주로 발생합니다. 절대 수치는 여전히 100%를 넘어 높아 보이지만, 실시간 시장가 매도세가 매수세보다 급증하면서 주가를 갉아먹는 상황입니다. 체결강도는 '절대 수치'보다 '현재 상승 중인가, 하락 중인가'의 방향성(모멘텀)이 훨씬 중요합니다.</p>
+    </div>
+    <div class="faq-box">
+        <div class="faq-q">Q2. 최적의 단타 돌파 매수 타점은 체결강도 몇 퍼센트인가요?</div>
+        <p class="faq-a">A. 통계적으로 가장 승률이 높은 구간은 100% 아래에 머물던 체결강도가 의미 있는 거래대금을 동반하며 105%를 강하게 뚫어올리는 '골든크로스' 시점입니다. 이미 150%를 넘겨버린 상태는 추격 매수 구간이 되어 손익비가 급격히 나빠집니다.</p>
+    </div>
+    <div class="faq-box">
+        <div class="faq-q">Q3. 체결강도가 높은 대형주와 테마주의 차이는 무엇인가요?</div>
+        <p class="faq-a">A. 대형주는 105%만 넘겨도 기관/외인의 실질 매집으로 해석되어 신뢰도가 매우 높습니다. 반면 시가총액 1,000억 미만의 소형 테마주는 세력의 틱 조작으로 순식간에 140%를 만들 수 있으므로, 분봉 차트의 거래대금 터짐 여부를 반드시 2중 확인해야 합니다.</p>
+    </div>
+
+    <footer>
+        <p>© 2026 multagicalc.com. All Rights Reserved. 본 가이드의 통계 분석 결과는 투자 참고용이며 최종 법적 책임은 투자자 본인에게 있습니다.</p>
+    </footer>
 </div>
 </body>
 </html>
